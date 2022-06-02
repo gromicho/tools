@@ -19,6 +19,4 @@ def MarkPointsOnMap( points, marker=default_marker, describe=default_describer, 
     return folium_map
 
 def FoliumToPng( folium_map, file_name, rendering_seconds=5 ):
-    img_data = folium_map._to_png(rendering_seconds)
-    img = Image.open(io.BytesIO(img_data))
-    img.save(file_name+'.png')
+    Image.open(io.BytesIO(folium_map._to_png(rendering_seconds))).save(file_name+'.png')
