@@ -3,6 +3,12 @@ import folium
 def GetPoints( data ):
     return data[['FINISH_LATITUDE','FINISH_LONGITUDE']].dropna().drop_duplicates().copy().rename(columns={'FINISH_LATITUDE':'lat','FINISH_LONGITUDE':'lon'})
 
+def AdjustBoundsForPoints( folium_map, points ):
+    a,b=points.min()
+    c,d=points.max()
+    folium_map.fit_bounds( ((a,b), (c,d)) )
+    return folium_map
+
 def MapForPoints( points, zoom_start=8 ):
     a,b=points.min()
     c,d=points.max()
