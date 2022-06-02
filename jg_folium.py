@@ -1,6 +1,9 @@
 import folium, io
 from PIL import Image
 
+def GetPoints( data ):
+    return data[['FINISH_LATITUDE','FINISH_LONGITUDE']].dropna().drop_duplicates().copy().rename(columns={'FINISH_LATITUDE':'lat','FINISH_LONGITUDE':'lon'})
+
 def MapForPoints( points, zoom_start=8 ):
     a,b=points.min()
     c,d=points.max()
