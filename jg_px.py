@@ -6,16 +6,14 @@ def ShowGantt( shift, data, resources, colors=px.colors.qualitative.Light24 ):
     import plotly.figure_factory
     import pandas as pd
     from itertools import chain
-
     import jg
 
-    shift_data = data[ data.SHIFT == shift ][['RESOURCES','ACTION','START_TIME','FINISH_TIME']].copy()
-    shift_data.rename(columns = { 'SHIFT': 'Task', 'START_TIME' : 'Start', 'FINISH_TIME' : 'Finish' } )
-    resources_used = set( chain.from_iterable( [ jg.make_iterable(eval(r)) for r in shift_data.RESOURCES if type(r) is str ] ) )
+    shift_data = data[ data.SHIFT == shift ][['RESOURCES','ACTION','START_TIME','FINISH_TIME']].copy().rename(columns = { 'START_TIME' : 'Start', 'FINISH_TIME' : 'Finish' }  )
     per_resource = []
-    for r in resources_used:
+    for r in set( chain.from_iterable( [ jg.make_iterable(eval(r)) for r in shift_data.RESOURCES if type(r) is str ] ) ):
         aux = shift_data[ shift_data.RESOURCES.str.contains(str(r)) ]
         aux[ 'Task' ] = resources[ resources.id_resource == str(r) ].resourceName.values[0]
+        display(aux)
         per_resource.append( aux )
     aux = pd.concat( per_resource )
     n = aux.ACTION.nunique()
