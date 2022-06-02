@@ -1,9 +1,9 @@
 def PlotlyToFigure( figure, file_name, engine='orca' ):
     figure.write_file(file_name,engine=engine)
     
+import plotly.express as px 
 def ShowGantt( shift, data, resources, colors=px.colors.qualitative.Light24 ):
     import plotly.figure_factory
-    import plotly.express as px 
     import pandas as pd
     from itertools import chain
 
