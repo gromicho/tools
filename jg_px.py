@@ -13,7 +13,6 @@ def ShowGantt( shift, data, resources, colors=px.colors.qualitative.Light24 ):
     for r in set( chain.from_iterable( [ jg.make_iterable(eval(r)) for r in shift_data.RESOURCES if type(r) is str ] ) ):
         aux = shift_data[ shift_data.RESOURCES.str.contains(str(r)) ]
         aux[ 'Task' ] = resources[ resources.id_resource == str(r) ].resourceName.values[0]
-        display(aux)
         per_resource.append( aux )
     aux = pd.concat( per_resource )
     n = aux.ACTION.nunique()
