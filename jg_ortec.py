@@ -7,5 +7,5 @@ def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
     orders['ORDER'] = orders.ORDER.astype(int)
     orders['LM'] = np.round( np.diff([0]+orders.LOAD_LM.to_list()).tolist(), nof_decimals )
     orders['KG'] = np.round( np.diff([0]+orders.LOAD_KG.to_list()).tolist(), nof_decimals )
-    orders['idx'] = [ addresses.loc[ (lat,lon) ].idx for (lat,lon) in orders[['FINISH_LATITUDE','FINISH_LONGITUDE']].values ]
-    return orders[['ACTION','ORDER','FINISH_LATITUDE','FINISH_LONGITUDE','idx','EARLIEST_START_TIME','LATEST_START_TIME','LM','KG']], aux, D.loc[aux.idx,aux.idx], T.loc[aux.idx,aux.idx]
+    orders['idx'] = [ addresses.loc[ (lat,lon) ].idx for (lat,lon) in orders[['LATITUDE','LONGITUDE']].values ]
+    return orders[['ACTION','ORDER','LATITUDE','LONGITUDE','idx','EARLIEST_START_TIME','LATEST_START_TIME','LM','KG']], aux, D.loc[aux.idx,aux.idx], T.loc[aux.idx,aux.idx]
