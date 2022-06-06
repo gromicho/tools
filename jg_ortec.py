@@ -1,5 +1,5 @@
 def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
-    import numpy as np
+    import numpy as np, jg
     these = data.SHIFT.isin( jg.make_iterable(shifts) )
     aux = data[ these ][['FINISH_LATITUDE','FINISH_LONGITUDE']].dropna().drop_duplicates().reset_index(drop=True)
     aux['idx'] = [ addresses.loc[ (lat,lon) ].idx for (lat,lon) in aux.values ]
