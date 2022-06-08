@@ -1,4 +1,22 @@
 def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
+    """ Extract instance from the given shift(s)
+        NOTE: resources are not returned, as it is up to you where you want to plan this!
+
+    Args:
+        data (data frame): planning or subset
+        shifts (int or enumerable): the shift(s) of interest
+        addresses (data frame): the reverse geocoding information 
+        D (data frame): the distance matrix
+        T (data frame): the travel time matrix
+        nof_decimals (int, optional): nof decimals to round order sizes to. Defaults to 2.
+
+    Returns:
+        O (data frame): the order information
+	  A (data frame): the address information
+	  d (data frame): the submatrix of D
+        t (data frame): the submatrix of T
+    """
+    
     import numpy as np, jg
     these = data.SHIFT.isin( jg.make_iterable(shifts) )
     aux = data[ these ][['FINISH_LATITUDE','FINISH_LONGITUDE']].dropna().drop_duplicates().copy().reset_index(drop=True)
