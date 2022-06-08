@@ -12,8 +12,8 @@ def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
 
     Returns:
         O (data frame): the order information
-	  A (data frame): the address information
-	  d (data frame): the submatrix of D
+	    A (data frame): the address information
+	    d (data frame): the submatrix of D
         t (data frame): the submatrix of T
     """
     
