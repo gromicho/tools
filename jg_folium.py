@@ -26,13 +26,13 @@ def MarkPointsOnMap( points, marker=default_marker, describe=default_describer, 
         marker(lat,lon,popup=describe(lat,lon),**kwargs).add_to(folium_map)
     return folium_map
 
-def MarkRouteThroughPointsOnMap( points, folium_map=None, describe=default_describer, color='blue', weight=3, **kwargs ):
+def MarkRouteThroughPointsOnMap( points, folium_map=None, describe=default_describer, color='blue', weight=3, opacity=1, icon_shape='marker', background_color='red',border_width=1,inner_icon_style='font-size:10px', **kwargs ):
     if not folium_map:
         folium_map = MapForPoints( points )
     stops = [ (lat,lon) for lat,lon in points.drop_duplicates().dropna().values ]
     for i,(lat,lon) in enumerate(stops):  
-        folium.Marker((lat,lon), icon=folium.plugins.BeautifyIcon(number=i,**kwargs),popup=describe(lat,lon)).add_to(folium_map)
-    folium.PolyLine(stops, color=color, weight=weight, **kwargs).add_to(folium_map)
+        folium.Marker((lat,lon), icon=folium.plugins.BeautifyIcon(number=i,icon_shape=icon_shape,background_color=background_color,border_width=border_width,inner_icon_style=inner_icon_style,**kwargs),popup=describe(lat,lon)).add_to(folium_map)
+    folium.PolyLine(stops, color=color, weight=weight, opacity=opacity, **kwargs).add_to(folium_map)
     return folium_map
 
 def FoliumToPng( folium_map, file_name, rendering_seconds=5 ):
