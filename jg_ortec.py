@@ -1,6 +1,8 @@
 def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
     """ Extract instance from the given shift(s)
-        NOTE: resources are not returned, as it is up to you where you want to plan this!
+    
+    NOTE: 
+        resources are not returned, as it is up to you where you want to plan this!
 
     Args:
         data (data frame): planning or subset
@@ -12,8 +14,8 @@ def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
 
     Returns:
         O (data frame): the order information
-	    A (data frame): the address information
-	    d (data frame): the submatrix of D
+        A (data frame): the address information
+        d (data frame): the submatrix of D
         t (data frame): the submatrix of T
     """
     
@@ -24,7 +26,7 @@ def ExtractInstance( data, shifts, addresses, D, T, nof_decimals=2 ):
     orders = data[these & ((data.ACTION =='pickup') | (data.ACTION =='deliver')) ]\
         [['ACTION','ORDER','ORDER_TYPE','SET_TEMPERATURE','FINISH_LATITUDE','FINISH_LONGITUDE','EARLIEST_START_TIME','LATEST_START_TIME','LOAD_LM','LOAD_KG']].copy().reset_index(drop=True)
     orders['LOAD_LM'] = orders.LOAD_LM.fillna(0)
-    orders['LOAD_KG'] = orders.LOAD_LM.fillna(0)
+    orders['LOAD_KG'] = orders.LOAD_KG.fillna(0)
     orders['ORDER'] = orders.ORDER.astype(int)
     orders['LM'] = np.round( np.diff([0]+orders.LOAD_LM.to_list()).tolist(), nof_decimals )
     orders['KG'] = np.round( np.diff([0]+orders.LOAD_KG.to_list()).tolist(), nof_decimals )
