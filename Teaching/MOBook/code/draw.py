@@ -343,14 +343,25 @@ def DrawBB( root, file_name ):
     Dotter(root).to_picture(_output_path+file_name)
     
 def ToTikz( root, tex_file_name, dot_file_name=None, fig_only=True ):
+    
+    replace = { '\n-#0000' : 'black'
+            ,   '-#0000' : 'black'
+            , '{0.0,0.0,1.0}' : '{0.129, 0.588, 0.953}'
+            , '{1.0,0.0,1.0}' : '{1.000, 0.647, 0}'
+            , '{0.0,1.0,0.0}' : '{0.298, 0.686, 0.314}'
+            , '{1.0,0.0,0.0}' : '{0.957, 0.263, 0.212}'
+            , r'\pgfsetlinewidth{1bp}' : r'\pgfsetlinewidth{2bp}'
+    }
+        
     dot = '\n'.join(list(Dotter(root)))
     if dot_file_name:
         with open(_output_path+dot_file_name,'w') as f:
             f.write(dot)
     tex = dot2tex.dot2tex(dot,crop=True,figonly=fig_only,tikzedgelabels=False)
 #    tex = '\n'.join( [line for line in tex.splitlines() if not '-#' in line] )
-    tex = tex.replace('\n-#0000','black')
-    tex = tex.replace('-#0000','black')
+
+    for k,v in replace.items():
+        tex = tex.replace(k,v)
     
     with open(_output_path+tex_file_name,'w') as f:
         f.write(tex)
